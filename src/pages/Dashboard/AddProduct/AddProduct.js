@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
+import { format } from 'date-fns';
+
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 const AddProduct = () => {
@@ -83,7 +85,7 @@ const AddProduct = () => {
                                     <label className="label mt-4"><span className="label-text">Listing Date</span></label>
                                     <input  {...register("listingDate", {
                                         required: "Listing Date Required"
-                                    })} type="date" className="input input-bordered w-full max-w-xs" />
+                                    })} value={format(new Date(), 'PP')} disabled className="input input-bordered w-full max-w-xs" />
                                     {errors.listingDate && <p className='text-red-600 text-sm'>{errors.listingDate?.message}</p>}
                                 </div>
 
