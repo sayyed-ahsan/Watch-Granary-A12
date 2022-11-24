@@ -6,8 +6,6 @@ const AddProduct = () => {
     //-----------------------------------------------------------------
     const { user } = useContext(AuthContext);
     //-----------------------------------------------------------------
-    //-----------------------------------------------------------------
-    //-----------------------------------------------------------------
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
     const handleAddProduct = (data) => {
@@ -126,9 +124,6 @@ const AddProduct = () => {
                                 <input className='btn mt-8 w-full' value={'Confirm'} type="submit" />
 
                             </form>
-                            {/* <p className='text-sm text-center my-2'>Already have an account <Link className='text-sky-400' to='/login'>Login</Link></p>
-                        <div className="divider">OR</div>
-                        <button className='btn btn-outline w-full'>Google</button> */}
                         </div>
                     </div>
                 </section>
