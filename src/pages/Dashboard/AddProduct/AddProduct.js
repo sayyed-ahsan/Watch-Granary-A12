@@ -10,8 +10,47 @@ const AddProduct = () => {
     //-----------------------------------------------------------------
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
+    const imgHostKey = process.env.REACT_APP_imagebb_key;
+    // console.log("host key", imgHostKey)
+    //-----------------------------------------------------------------
     const handleAddProduct = (data) => {
         console.log(data)
+        const image = data.photo[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imgData => {
+                if (imgData.success) {
+                    console.log("imagggggurlllll", imgData.data.url);
+                    // const doctor = {
+                    //     name: data.name,
+                    //     email: data.email,
+                    //     specialty: data.specialty,
+                    //     image: imgData.data.url
+                    // }
+
+                    // // save doctor information to the database
+                    // fetch('https://doctors-portal-server-six-phi.vercel.app/doctors', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'content-type': 'application/json',
+                    //         // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    //     },
+                    //     body: JSON.stringify(doctor)
+                    // })
+                    //     .then(res => res.json())
+                    //     .then(result => {
+                    //         console.log(result);
+                    //         // toast.success(`${data.name} is added successfully`);
+                    //         // navigate('/dashboard/managedoctors')
+                    //     })
+                }
+            })
     }
     //-----------------------------------------------------------------
 
@@ -20,7 +59,7 @@ const AddProduct = () => {
             <div>
                 <section className='mx-5 '>
                     <div className='py-10 text-3xl flex justify-center items-center'>
-                        <div className='bg-white w-96 p-12 rop-shadow-lg border-2 border-orange-400'>
+                        <div className='bg-white w-96 p-12 rop-shadow-lg border-2 border-orange-400 rounded-lg'>
                             <h2 className='text-3xl text-center'>List a Product</h2>
                             <form onSubmit={handleSubmit(handleAddProduct)}>
                                 {/*---------- name -----------*/}
@@ -83,10 +122,7 @@ const AddProduct = () => {
                                 {/*---------- date -----------*/}
                                 <div className="form-control w-full max-w-xs">
                                     <label className="label mt-4"><span className="label-text">Listing Date</span></label>
-                                    <input  {...register("listingDate", {
-                                        required: "Listing Date Required"
-                                    })} value={format(new Date(), 'PP')} disabled className="input input-bordered w-full max-w-xs" />
-                                    {errors.listingDate && <p className='text-red-600 text-sm'>{errors.listingDate?.message}</p>}
+                                    <input  {...register("listingDate")} value={format(new Date(), 'PP')} disabled className="input input-bordered w-full max-w-xs" />
                                 </div>
 
                                 {/*---------- stoke -----------*/}
