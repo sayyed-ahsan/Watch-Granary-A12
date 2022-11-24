@@ -16,13 +16,14 @@ const Dashboard = () => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+                    <ul className="menu p-4 w-46 bg-base-100 text-base-content">
                         <li><Link to={'/dashboard'}>My Bookings</Link></li>
-                        <li><Link to={'/dashboard'}>Add Products</Link></li>
-                        <li><Link to={'/dashboard'}>My Bayers</Link></li>
-                        <li><Link to={'/dashboard'}></Link></li>
-                        <li><Link to={'/dashboard'}></Link></li>
-                        <li><Link to={'/dashboard'}>All Users</Link></li>
+                        <li><Link to={'/dashboard/addProduct'}>Add Product</Link></li>
+                        <li><Link to={'/dashboard/myProducts'}>My Products</Link></li>
+                        {/* <li><Link to={'/dashboard'}>My Buyers</Link></li> */}
+                        <li><Link to={'/dashboard/allBuyers'}>All Buyers</Link></li>
+                        <li><Link to={'/dashboard/allSellers'}>All Sellers</Link></li>
+                        <li><Link to={'/dashboard/report'}>Reported Items</Link></li>
                     </ul>
                 </div>
             </div>
