@@ -11,7 +11,9 @@ const AddProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
     const imgHostKey = process.env.REACT_APP_imagebb_key;
-    // console.log("host key", imgHostKey)
+    const listingDate = format(new Date(), 'PP')
+
+    console.log(" listingDate.......", listingDate)
     //-----------------------------------------------------------------
     const handleAddProduct = (data) => {
         // console.log(data)
@@ -29,7 +31,7 @@ const AddProduct = () => {
                 if (imgData.success) {
                     console.log("imag--------", imgData.data.url);
 
-                    const productInfo = { ...data, PhotoUrl: imgData.data.url }
+                    const productInfo = { ...data, PhotoUrl: imgData?.data.url, email: user?.email }
                     console.log(productInfo)
 
                     // save product information to the database
@@ -120,7 +122,7 @@ const AddProduct = () => {
                                 {/*---------- date -----------*/}
                                 <div className="form-control w-full max-w-xs">
                                     <label className="label mt-4"><span className="label-text">Listing Date</span></label>
-                                    <input  {...register("listingDate")} value={format(new Date(), 'PP')} disabled className="input input-bordered w-full max-w-xs" />
+                                    <input  {...register("listingDate")} value={listingDate} className="input input-bordered w-full max-w-xs" />
                                 </div>
 
                                 {/*---------- stoke -----------*/}
@@ -152,10 +154,10 @@ const AddProduct = () => {
                                 </div>
 
                                 {/*---------- email -----------*/}
-                                <div className="form-control w-full max-w-xs">
+                                {/* <div className="form-control w-full max-w-xs">
                                     <label className="label mt-4"><span className="label-text">Your Email</span></label>
-                                    <input  {...register("sellerEmail")} defaultValue={user?.email} disabled type="email" className="input input-bordered w-full max-w-xs" />
-                                </div>
+                                    <input  {...register("sellerEmail")} name="sellerEmail" Value={user?.email} type="email" className="input input-bordered w-full max-w-xs" />
+                                </div> */}
                                 {/*---------- Add Button -----------*/}
                                 <input className='btn mt-8 w-full' value={'Confirm'} type="submit" />
 
