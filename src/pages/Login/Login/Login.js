@@ -7,21 +7,51 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 const Login = () => {
     //-----------------------------------------------------------------
     const { user, signIn, googleSignin } = useContext(AuthContext);
-    console.log(user)
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
     const handleLogin = (data) => {
         signIn(data.email, data.password)
-        // getUserToken(data.email);
+        getUserToken(data.email);
     }
     //-----------------------------------------------------------------
-    const googleLogin = () => {
+    const googleLogin = async () => {
+        const status = 'buyer'
         googleSignin()
+            .then(res => saveUser(res.user.displayName, res.user.email, status))
+
+
     }
     //-----------------------------------------------------------------
-
+    //-----------------------------------------------------------------
+    const saveUser = (name, email, status) => {
+        const user = { name, email, status };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                getUserToken(email)
+            })
+    }
+    //-----------------------------------------------------------------
+    const getUserToken = (email) => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.accessToken) {
+                    localStorage.setItem('accesstoken', data.accessToken);
+                    // navigate('/')
+                }
+            })
+    }
+    //-----------------------------------------------------------------
 
     return (
         <section className='mx-5 '>

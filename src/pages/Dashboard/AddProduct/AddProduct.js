@@ -14,8 +14,9 @@ const AddProduct = () => {
     // console.log("host key", imgHostKey)
     //-----------------------------------------------------------------
     const handleAddProduct = (data) => {
-        console.log(data)
+        // console.log(data)
         const image = data.photo[0];
+        // console.log(image)
         const formData = new FormData();
         formData.append('image', image);
         const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
@@ -26,29 +27,26 @@ const AddProduct = () => {
             .then(res => res.json())
             .then(imgData => {
                 if (imgData.success) {
-                    console.log("imagggggurlllll", imgData.data.url);
-                    // const doctor = {
-                    //     name: data.name,
-                    //     email: data.email,
-                    //     specialty: data.specialty,
-                    //     image: imgData.data.url
-                    // }
+                    console.log("imag--------", imgData.data.url);
 
-                    // // save doctor information to the database
-                    // fetch('https://doctors-portal-server-six-phi.vercel.app/doctors', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'content-type': 'application/json',
-                    //         // authorization: `bearer ${localStorage.getItem('accessToken')}`
-                    //     },
-                    //     body: JSON.stringify(doctor)
-                    // })
-                    //     .then(res => res.json())
-                    //     .then(result => {
-                    //         console.log(result);
-                    //         // toast.success(`${data.name} is added successfully`);
-                    //         // navigate('/dashboard/managedoctors')
-                    //     })
+                    const productInfo = { ...data, PhotoUrl: imgData.data.url }
+                    console.log(productInfo)
+
+                    // save product information to the database
+                    fetch('http://localhost:5000/addproduct', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                            // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(productInfo)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            console.log(result);
+                            // toast.success(`${data.name} is added successfully`);
+                            // navigate('/dashboard')
+                        })
                 }
             })
     }

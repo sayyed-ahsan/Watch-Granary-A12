@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 const Signup = () => {
@@ -11,25 +12,48 @@ const Signup = () => {
     //-----------------------------------------------------------------
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
-    const handleLogin = (data) => {
+    const signUp = (data) => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
                 // toast('User Created Successfully.')
-                // const userInfo = {
-                //     displayName: data.name
-                // }
-                // saveUser(data.name, data.email)
-                // updateUser(userInfo)
-                //     .then(() => { })
-                //     .catch(err => console.log(err));
+                saveUser(data.name, data.email, data.status)
+
             })
             .catch(error => {
                 console.log(error)
                 // setSignUPError(error.message)
             });
     }
+    //-----------------------------------------------------------------
+    const saveUser = (name, email, status) => {
+        const user = { name, email, status };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                getUserToken(email)
+            })
+    }
+    //-----------------------------------------------------------------
+    const getUserToken = (email) => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.accessToken) {
+                    localStorage.setItem('accesstoken', data.accessToken);
+                    // navigate('/')
+                }
+            })
+    }
+    //-----------------------------------------------------------------
     //-----------------------------------------------------------------
 
 
@@ -39,7 +63,7 @@ const Signup = () => {
                 <div className='h-[800px] text-3xl flex justify-center items-center'>
                     <div className='bg-white w-96 p-12 rop-shadow-lg border-2 border-sky-300'>
                         <h2 className='text-3xl text-center'>Signup</h2>
-                        <form onSubmit={handleSubmit(handleLogin)}>
+                        <form onSubmit={handleSubmit(signUp)}>
                             {/*---------- name -----------*/}
                             <div className="form-control w-full max-w-xs">
                                 <label className="label"><span className="label-text">Name</span></label>
@@ -47,6 +71,14 @@ const Signup = () => {
                                     required: "Name is Required"
                                 })} type="name" className="input input-bordered w-full max-w-xs" />
                                 {errors.name && <p className='text-red-600 text-sm'>{errors.name?.message}</p>}
+                            </div>
+                            {/*---------- status -----------*/}
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label mt-"><span className="label-text">Account Type</span></label>
+                                <select {...register("status")} name="status" className="select select-bordered w-full">
+                                    <option>seller</option>
+                                    <option>buyer</option>
+                                </select>
                             </div>
                             {/*---------- email -----------*/}
                             <div className="form-control w-full max-w-xs">
@@ -67,12 +99,9 @@ const Signup = () => {
                                 <label className="label"><span className="label-text">forget password?</span></label>
                                 {errors.password && <p className='text-red-600 text-sm'>{errors.password?.message}</p>}
                             </div>
+                            {/*---------- button -----------*/}
                             <input className='btn w-full' value={'Signup'} type="submit" />
-
                         </form>
-                        {/* <p className='text-sm text-center my-2'>Already have an account <Link className='text-sky-400' to='/login'>Login</Link></p>
-                        <div className="divider">OR</div>
-                        <button className='btn btn-outline w-full'>Google</button> */}
                     </div>
                 </div>
             </section>
