@@ -15,11 +15,11 @@ const MyBookings = () => {
                 console.log(data)
                 setMyBookings(data.data)
             })
-    }, [])
+    }, [user])
 
     return (
         <div>
-            <h1 className='text-center text-2xl my-3'>My listed Products{myBookings?.length}</h1>
+            <h1 className='text-center text-2xl my-3'>My Booked Products{myBookings?.length}</h1>
 
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">

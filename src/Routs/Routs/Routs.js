@@ -12,6 +12,7 @@ import ReportedItems from "../../pages/Dashboard/ReportedItems/ReportedItems";
 import Home from "../../pages/Home/Home/Home";
 import Login from "../../pages/Login/Login/Login";
 import Signup from "../../pages/Login/Signup/Signup";
+import Bonus from "../../pages/Shared/Bonus/Bonus";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
                 path: '/signup',
                 element: <Signup></Signup>
             },
+            {
+                path: '*',
+                element: <Bonus></Bonus>
+            }
         ]
     },
     {
