@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const MyBookings = () => {
 
@@ -26,15 +27,10 @@ const MyBookings = () => {
                     {/* <!-- head --> */}
                     <thead>
                         <tr>
-                            <th>
-                                <label>
-                                    <input type="checkbox" className="checkbox" />
-                                </label>
-                            </th>
+
+                            <th>Image</th>
                             <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
-                            <th></th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,12 +40,7 @@ const MyBookings = () => {
 
                         {
                             myBookings?.map((product, i) =>
-                                <tr>
-                                    <th>
-                                        <label>
-                                            <input type="checkbox" className="checkbox" />
-                                        </label>
-                                    </th>
+                                <tr className='hover'>
                                     <td>
                                         <div className="flex items-center space-x-3">
                                             <div className="avatar">
@@ -58,20 +49,21 @@ const MyBookings = () => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="font-bold">Hart Hagerty</div>
-                                                <div className="text-sm opacity-50">United States</div>
+                                                <div className="font-bold">{product.name}</div>
+                                                <div className="text-sm opacity-50">{product.listingDate}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         Zemlak, Daniel and Leannon
                                         <br />
-                                        <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                                        <span className="badge badge-ghost badge-sm">{product.location}</span>
                                     </td>
-                                    <td>Purple</td>
-                                    <th>
-                                        <button className="btn btn-ghost btn-xs">details</button>
-                                    </th>
+                                    <td>
+                                        <Link to={`/dashboard/payment/${product._id}`}>
+                                            <button className="btn btn-sm btn-xs">pay</button>
+                                        </Link>
+                                    </td>
                                 </tr>
                             )
                         }
