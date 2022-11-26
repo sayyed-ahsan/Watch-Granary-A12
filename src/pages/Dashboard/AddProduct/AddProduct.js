@@ -91,7 +91,7 @@ const AddProduct = () => {
                                     <label className="label mt-4"><span className="label-text">Product Photo</span></label>
                                     <input  {...register("photo", {
                                         required: "Product Photo Required"
-                                    })} type="file" className="input input-bordered w-full max-w-xs" />
+                                    })} type="file" className="file-input file-input-bordered w-full max-w-xs" />
                                     {errors.photo && <p className='text-red-600 text-sm'>{errors.photo?.message}</p>}
                                 </div>
 

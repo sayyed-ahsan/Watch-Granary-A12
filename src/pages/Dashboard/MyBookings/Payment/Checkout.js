@@ -17,12 +17,11 @@ const Checkout = ({ bookedProduct }) => {
     //----------------------------
     const stripe = useStripe();
     const elements = useElements();
-    const { resellPrice, buyerEmail, patient, _id } = bookedProduct;
+    const { resellPrice, buyerEmail, _id } = bookedProduct;
     //----------------------------
-
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("https://doctors-portal-server-six-phi.vercel.app/create-payment-intent", {
+        fetch("http://localhost:5000/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -67,12 +66,14 @@ const Checkout = ({ bookedProduct }) => {
                 payment_method: {
                     card: card,
                     billing_details: {
-                        name: patient,
-                        buyerEmail: buyerEmail
+                        name: 'jaid',
+                        email: buyerEmail
                     },
                 },
             },
         );
+
+        console.log(buyerEmail)
 
         if (confirmError) {
             setCardError(confirmError.message);
@@ -84,15 +85,16 @@ const Checkout = ({ bookedProduct }) => {
             const payment = {
                 resellPrice,
                 transactionId: paymentIntent.id,
-                buyerEmail,
+                email: buyerEmail,
                 bookingId: _id
             }
-            fetch('https://doctors-portal-server-six-phi.vercel.app/payments', {
+            console.log(payment)
+            fetch('http://localhost:5000/payments', {
                 method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                    authorization: `bearer ${localStorage.getItem('accessToken')}`
-                },
+                // headers: {
+                //     'content-type': 'application/json',
+                //     authorization: `bearer ${localStorage.getItem('accessToken')}`
+                // },
                 body: JSON.stringify(payment)
             })
                 .then(res => res.json())

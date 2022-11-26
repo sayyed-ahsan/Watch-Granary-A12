@@ -40,7 +40,7 @@ const MyBookings = () => {
 
                         {
                             myBookings?.map((product, i) =>
-                                <tr className='hover'>
+                                <tr key={product._id} className='hover'>
                                     <td>
                                         <div className="flex items-center space-x-3">
                                             <div className="avatar">
