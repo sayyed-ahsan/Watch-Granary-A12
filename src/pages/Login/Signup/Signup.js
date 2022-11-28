@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
+import Loder from '../../Shared/Loder/Loder';
 
 
 const Signup = () => {
+    const [loding, setLoding] = useState(false)
+
     //-----------------------------------------------------------------
     const { user, createUser, updateUser } = useContext(AuthContext);
     //-----------------------------------------------------------------
@@ -15,6 +18,7 @@ const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
     const signUp = (data) => {
+        setLoding(true)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
@@ -50,6 +54,7 @@ const Signup = () => {
         fetch(`https://final-12-server-sayyed-ahsan.vercel.app/jwt?email=${email}`)
             .then(res => res.json())
             .then(data => {
+                setLoding(false)
                 if (data.accessToken) {
                     localStorage.setItem('accesstoken', data.accessToken);
                     navigate('/')
@@ -58,7 +63,9 @@ const Signup = () => {
     }
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
-
+    if (loding) {
+        return <Loder></Loder>
+    }
 
     return (
         <div>

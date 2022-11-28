@@ -8,7 +8,7 @@ const SectionA = () => {
     return (
         <div>
             <section>
-                <div className="hero bg-base-200">
+                <div className="hero">
                     <div className="hero-content flex-col lg:flex-row-reverse">
                         <img src={img3} className="max-w-sm rounded-lg shadow-2xl" />
                         <div className='max-w-[600px]'>

@@ -4,11 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
-
 import { useForm } from "react-hook-form";
 import Loder from '../Shared/Loder/Loder';
-import useCurrectUser from '../../hooks/useCurrentUser';
-
+import './categories.css'
 
 const Categories = () => {
     const { user } = useContext(AuthContext);
@@ -48,11 +46,9 @@ const Categories = () => {
                 }
             });
             const data = await res.json();
-            console.log(res)
             return data;
         }
     });
-
 
     //-------------------------------------------
     const handleBooking = (data) => {
@@ -131,11 +127,11 @@ const Categories = () => {
             <h2 className='text-center text-2xl my-10'>This is the cullection of all <br />{products[0]?.category} Watches</h2>
 
 
-            <div className='grid gap-6 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+            <div className='allcard'>
                 {
                     products?.map(product => <div key={product?._id}>
                         {
-                            product?.stoke == "available" && <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl">
+                            product?.stoke == "available" ? <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl mx-[20px] my-[10px]">
                                 <figure><img src={product?.PhotoUrl} alt="Shoes" /></figure>
                                 <div className="card-body">
                                     <h2 className="card-title">
@@ -183,7 +179,7 @@ const Categories = () => {
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> : <div className='dis'></div>
                         }
                     </div>
 

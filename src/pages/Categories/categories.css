@@ -1,0 +1,10 @@
+.allcard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.dis {
+    display: none;
+    /* position: absolute; */
+}

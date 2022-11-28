@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
+import Loder from '../../Shared/Loder/Loder';
 
 
 const Login = () => {
+    const [loding, setLoding] = useState(false)
     //-----------------------------------------------------------------
     const { user, signIn, googleSignin } = useContext(AuthContext);
     //-----------------------------------------------------------------
@@ -14,11 +16,13 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
     const handleLogin = (data) => {
+        setLoding(true)
         signIn(data.email, data.password)
         getUserToken(data.email);
     }
     //-----------------------------------------------------------------
     const googleLogin = async () => {
+        setLoding(true)
         const status = 'buyer'
         googleSignin()
             .then(res => saveUser(res.user.displayName, res.user.email, status))
@@ -49,13 +53,21 @@ const Login = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                setLoding(false)
+
                 if (data.accessToken) {
                     localStorage.setItem('accesstoken', data.accessToken);
+
                     navigate('/')
                 }
             })
     }
     //-----------------------------------------------------------------
+
+
+    if (loding) {
+        return <Loder></Loder>
+    }
 
     return (
         <section className='mx-5 '>

@@ -1,5 +1,4 @@
 import React from 'react';
-import Loder from '../../Shared/Loder/Loder';
 import Advertisement from '../Advertisement/Advertisement';
 import Banner from '../Banner/Banner';
 import Categories from '../Categories/Categories';
@@ -12,7 +11,6 @@ const Home = () => {
             <Advertisement></Advertisement>
             <Categories></Categories>
             <SectionA></SectionA>
-            <Loder></Loder>
         </div>
     );
 };
