@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { format } from 'date-fns';
-
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 const AddProduct = () => {
@@ -13,7 +13,7 @@ const AddProduct = () => {
     const imgHostKey = process.env.REACT_APP_imagebb_key;
     const listingDate = format(new Date(), 'PP')
 
-    console.log(" listingDate.......", listingDate)
+    // console.log(" listingDate.......", listingDate)
     //-----------------------------------------------------------------
     const handleAddProduct = (data) => {
         // console.log(data)
@@ -31,7 +31,7 @@ const AddProduct = () => {
                 if (imgData.success) {
                     console.log("imag--------", imgData.data.url);
 
-                    const productInfo = { ...data, PhotoUrl: imgData?.data.url, email: user?.email }
+                    const productInfo = { ...data, PhotoUrl: imgData?.data.url, email: user?.email, stoke: "available" }
                     console.log(productInfo)
 
                     // save product information to the database
@@ -45,8 +45,8 @@ const AddProduct = () => {
                     })
                         .then(res => res.json())
                         .then(result => {
-                            console.log(result);
-                            // toast.success(`${data.name} is added successfully`);
+                            // console.log(result);
+                            toast.success(`Product added successfully`);
                             // navigate('/dashboard')
                         })
                 }
@@ -125,14 +125,13 @@ const AddProduct = () => {
                                     <input  {...register("listingDate")} value={listingDate} className="input input-bordered w-full max-w-xs" />
                                 </div>
 
-                                {/*---------- stoke -----------*/}
-                                <div className="form-control w-full max-w-xs">
+                                {/* <div className="form-control w-full max-w-xs">
                                     <label className="label mt-4"><span className="label-text">Stoke</span></label>
                                     <select {...register("stoke")} name="stoke" className="select select-bordered w-full">
                                         <option>available</option>
                                         <option>sold</option>
                                     </select>
-                                </div>
+                                </div> */}
                                 {/*---------- condition -----------*/}
                                 <div className="form-control w-full max-w-xs">
                                     <label className="label mt-4"><span className="label-text">Condition</span></label>

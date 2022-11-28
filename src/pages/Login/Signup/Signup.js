@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import toast from 'react-hot-toast';
+
 
 const Signup = () => {
     //-----------------------------------------------------------------
     const { user, createUser } = useContext(AuthContext);
-    console.log(user)
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
@@ -17,7 +18,7 @@ const Signup = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                // toast('User Created Successfully.')
+                toast('User Created Successfully.')
                 saveUser(data.name, data.email, data.status)
 
             })
@@ -76,8 +77,8 @@ const Signup = () => {
                             <div className="form-control w-full max-w-xs">
                                 <label className="label mt-"><span className="label-text">Account Type</span></label>
                                 <select {...register("status")} name="status" className="select select-bordered w-full">
-                                    <option>seller</option>
                                     <option>buyer</option>
+                                    <option>seller</option>
                                 </select>
                             </div>
                             {/*---------- email -----------*/}
@@ -96,7 +97,7 @@ const Signup = () => {
                                     minLength: { value: 6, message: 'Password must be 6 characters or longer' },
                                     pattern: { value: /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]/, message: 'please enter a strong password' }
                                 })} type="password" className="input input-bordered w-full max-w-xs" />
-                                <label className="label"><span className="label-text">forget password?</span></label>
+                                <label className="label"><span className="label-text">Already have an account?</span></label>
                                 {errors.password && <p className='text-red-600 text-sm'>{errors.password?.message}</p>}
                             </div>
                             {/*---------- button -----------*/}

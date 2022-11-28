@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-
+import { AuthContext } from '../../../../contexts/AuthProvider';
+import toast from 'react-hot-toast'
 
 const Checkout = ({ bookedProduct }) => {
 
-
-
+    const { user } = useContext(AuthContext);
 
     //----------------------------
     const [cardError, setCardError] = useState('');
@@ -17,7 +17,7 @@ const Checkout = ({ bookedProduct }) => {
     //----------------------------
     const stripe = useStripe();
     const elements = useElements();
-    const { resellPrice, buyerEmail, _id } = bookedProduct;
+    const { price, userEmail, _id } = bookedProduct;
     //----------------------------
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
@@ -27,11 +27,11 @@ const Checkout = ({ bookedProduct }) => {
                 "Content-Type": "application/json",
                 authorization: `bearer ${localStorage.getItem('accesstoken')}`
             },
-            body: JSON.stringify({ resellPrice }),
+            body: JSON.stringify({ price }),
         })
             .then((res) => res.json())
             .then((data) => setClientSecret(data.clientSecret));
-    }, [resellPrice]);
+    }, [price]);
 
 
     const handleSubmit = async (event) => {
@@ -66,14 +66,14 @@ const Checkout = ({ bookedProduct }) => {
                 payment_method: {
                     card: card,
                     billing_details: {
-                        name: 'jaid',
-                        email: buyerEmail
+                        name: user.displayName,
+                        email: userEmail
                     },
                 },
             },
         );
 
-        console.log(buyerEmail)
+        console.log(userEmail)
 
         if (confirmError) {
             setCardError(confirmError.message);
@@ -83,33 +83,49 @@ const Checkout = ({ bookedProduct }) => {
             console.log('card info', card);
             // store payment info in the database
             const payment = {
-                resellPrice,
+                price,
                 transactionId: paymentIntent.id,
-                email: buyerEmail,
+                email: userEmail,
                 bookingId: _id
             }
             console.log(payment)
             fetch('http://localhost:5000/payments', {
-                method: 'POST',
-                // headers: {
-                //     'content-type': 'application/json',
-                //     authorization: `bearer ${localStorage.getItem('accessToken')}`
-                // },
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json',
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                },
                 body: JSON.stringify(payment)
             })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
-                    if (data.insertedId) {
+                    if (data.modifiedCount) {
+                        oldCulletionUpdate(bookedProduct.oldCullectionId)
                         setSuccess('Congrats! your payment completed');
                         setTransactionId(paymentIntent.id);
                     }
                 })
         }
-        setProcessing(false);
-
 
     }
+
+
+
+    const oldCulletionUpdate = (oldId) => {
+        console.log(oldId)
+        fetch(`http://localhost:5000/paymentsOld/${oldId}`, {
+            method: 'PUT',
+        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success(`successful`);
+                console.log(data);
+                setProcessing(false);
+
+            })
+    }
+
 
 
     return (

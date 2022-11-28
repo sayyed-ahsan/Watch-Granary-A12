@@ -18,6 +18,9 @@ const MyBookings = () => {
             })
     }, [user])
 
+
+    console.log(myBookings);
+
     return (
         <div>
             <h1 className='text-center text-2xl my-3'>My Booked Products{myBookings?.length}</h1>
@@ -29,7 +32,8 @@ const MyBookings = () => {
                         <tr>
 
                             <th>Image</th>
-                            <th>Name</th>
+                            <th>Titel</th>
+                            <th>Price</th>
                             <th>Payment</th>
                         </tr>
                     </thead>
@@ -45,24 +49,30 @@ const MyBookings = () => {
                                         <div className="flex items-center space-x-3">
                                             <div className="avatar">
                                                 <div className="w-16 rounded">
-                                                    <img src={product?.PhotoUrl} alt="Tailwind-CSS-Avatar-component" />
+                                                    <img src={product?.photo} alt="Tailwind-CSS-Avatar-component" />
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">{product.name}</div>
-                                                <div className="text-sm opacity-50">{product.listingDate}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        Zemlak, Daniel and Leannon
-                                        <br />
-                                        <span className="badge badge-ghost badge-sm">{product.location}</span>
+                                        {product?.name}
+
                                     </td>
+
                                     <td>
-                                        <Link to={`/dashboard/payment/${product._id}`}>
-                                            <button className="btn btn-sm btn-xs">pay</button>
-                                        </Link>
+                                        {product?.price}
+                                    </td>
+
+                                    <td>
+                                        {
+                                            !product.paid &&
+                                            <Link to={`/dashboard/payment/${product?._id}`}>
+                                                <button className="btn btn-outline btn-success btn-sm btn-xs">pay</button>
+                                            </Link>
+                                        }
+                                        {
+                                            product.paid && <span className='text-green-500'>Paid</span>
+                                        }
                                     </td>
                                 </tr>
                             )

@@ -1,42 +1,95 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import toast from 'react-hot-toast'
+
 
 const ReportedItems = () => {
+
+
+    const { data: reportedProducts = [], isLoading, refetch } = useQuery({
+        queryKey: ['reportedProducts'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/reportedProducts`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    const hendleDelet = (id) => {
+        fetch(`http://localhost:5000/reportedProduct/${id}`, {
+            method: 'DELETE',
+            // headers: {
+            //     authorization: `bearer ${localStorage.getItem('accessToken')}`
+            // }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    console.log(data)
+                    toast.error(' Dilete successful.')
+                    refetch();
+                }
+            })
+    }
+
+
+
+
     return (
         <div>
-            <div className="overflow-x-auto">
+            <h1 className='text-center text-2xl my-3'>Total Reported Products: {reportedProducts?.length}</h1>
+
+            <div className="overflow-x-auto w-full">
                 <table className="table w-full">
                     {/* <!-- head --> */}
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
+
+                            <th>Image</th>
+                            <th>Titel</th>
+                            <th>Price</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* <!-- row 1 --> */}
-                        <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr>
-                        {/* <!-- row 2 --> */}
-                        <tr className="hover">
-                            <th>2</th>
-                            <td>Hart Hagerty</td>
-                            <td>Desktop Support Technician</td>
-                            <td>Purple</td>
-                        </tr>
-                        {/* <!-- row 3 --> */}
-                        <tr>
-                            <th>3</th>
-                            <td>Brice Swyre</td>
-                            <td>Tax Accountant</td>
-                            <td>Red</td>
-                        </tr>
+
+
+
+                        {
+                            reportedProducts?.map((product, i) =>
+                                <tr key={product._id} className='hover'>
+                                    <td>
+                                        <div className="flex items-center space-x-3">
+                                            <div className="avatar">
+                                                <div className="w-16 rounded">
+                                                    <img src={product?.PhotoUrl} alt="Tailwind-CSS-Avatar-component" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {product?.name}
+
+                                    </td>
+
+                                    <td>
+                                        {product?.resellPrice}
+                                    </td>
+
+                                    <td>
+                                        <button onClick={() => hendleDelet(product._id)} className="btn btn-warning btn-circle btn-outline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        }
+
+
                     </tbody>
+
+
                 </table>
             </div>
         </div>
