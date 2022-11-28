@@ -1,19 +1,24 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 const Header = () => {
 
     const { handleThemeChange, user, logOut } = useContext(AuthContext);
+    const navigate = useNavigate('')
     // console.log(user)
     const signout = () => {
         logOut()
+        navigate('/')
     }
 
     const menuItem =
         <React.Fragment>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/dashboard">Dashboard</Link></li>
+            {
+                user && <li><Link to="/dashboard">Dashboard</Link></li>
+            }
+
             <li><Link to="/blog">Blog</Link></li>
             {
                 user?.uid ?
