@@ -15,11 +15,11 @@ const AdminRoute = ({ children }) => {
         return <Loder />
     }
 
-    if (currentUser === 'admin') {
+    if (user || currentUser === 'admin') {
         return children;
     }
 
-    // return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+    return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
 };
 
 export default AdminRoute;

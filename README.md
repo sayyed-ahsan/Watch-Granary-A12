@@ -10,3 +10,7 @@
 * I also use lottifile animation for batter UI
 * Telwind css and dasiui used in this porject
 * I have use react firebase hooks to make the code eazy to read and understand for all.
+
+adminEmail: <sakib@gmail.com>
+
+adminPassword: <!@#123QWEqwe>

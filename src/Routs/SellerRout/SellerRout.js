@@ -15,7 +15,7 @@ const SellerRout = ({ children }) => {
         return <Loder></Loder>
     }
 
-    if (currentUser == 'seller') {
+    if (user || currentUser === 'seller') {
         return children;
     }
 
