@@ -7,6 +7,8 @@ import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { useForm } from "react-hook-form";
 import Loder from '../Shared/Loder/Loder';
 import './categories.css'
+import useCurrectUser from '../../hooks/useCurrentUser';
+import el from 'date-fns/esm/locale/el/index.js';
 
 const Categories = () => {
     const { user } = useContext(AuthContext);
@@ -14,6 +16,8 @@ const Categories = () => {
     const userName = user?.displayName
 
     const [currentUsername, setcurrentUsername] = useState('');
+
+    const [currentUser, iscurrentUserLoading] = useCurrectUser(user?.email);
 
 
     const [bookedProduct, setProduct] = useState(null)
@@ -73,24 +77,34 @@ const Categories = () => {
 
 
         console.log(buyerEmail);
-        console.log(allInfo);
-        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/categories/${bookedProduct?._id}`, {
-            method: 'POST',
-            headers: {
-                bookingProduct: JSON.stringify(allInfo),
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                toast.success('successful.')
-                console.log('ssssssssss')
-                refetch();
-                reset()
-                // navigate('/dashboard')
+        console.log(currentUser);
+        if (currentUser === 'admin') {
+            toast('You can not book as you are Admin')
+        }
+        else if (currentUser === 'seller') {
+            toast('You can not book as you are Seller')
 
-
+        }
+        else {
+            fetch(`https://final-12-server-sayyed-ahsan.vercel.app/categories/${bookedProduct?._id}`, {
+                method: 'POST',
+                headers: {
+                    bookingProduct: JSON.stringify(allInfo),
+                }
             })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    toast.success('successful.')
+                    console.log('ssssssssss')
+                    refetch();
+                    reset()
+                    // navigate('/dashboard')
+
+
+                })
+        }
+
     }
     //-------------------------------------------
 

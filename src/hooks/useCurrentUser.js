@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const useCurrectUser = email => {
-    const [currentUser, setcurrentUser] = useState('buyer');
+    const [currentUser, setcurrentUser] = useState('');
     const [iscurrentUserLoading, setcurrentUserLoading] = useState(true);
     useEffect(() => {
         if (email) {
@@ -10,7 +10,6 @@ const useCurrectUser = email => {
                 .then(data => {
                     console.log(data);
                     setcurrentUser(data.status);
-                    setcurrentUser(data.name);
                     setcurrentUserLoading(false);
                 })
         }
