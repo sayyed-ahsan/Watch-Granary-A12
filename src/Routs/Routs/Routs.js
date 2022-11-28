@@ -69,7 +69,7 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/payment/:productId',
                 element: <Payment></Payment>,
-                loader: ({ params }) => fetch(`http://localhost:5000/payment/${params.productId}`)
+                loader: ({ params }) => fetch(`https://final-12-server-sayyed-ahsan.vercel.app/payment/${params.productId}`)
             },
             {
                 path: '/dashboard/addProduct',

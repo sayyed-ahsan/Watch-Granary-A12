@@ -10,7 +10,7 @@ const MyProducts = () => {
 
 
     const { user } = useContext(AuthContext);
-    const url = `http://localhost:5000/myProducts?email=${user?.email}`;
+    const url = `https://final-12-server-sayyed-ahsan.vercel.app/myProducts?email=${user?.email}`;
 
 
     const { data: myProducts, isLoading, refetch } = useQuery({
@@ -25,7 +25,7 @@ const MyProducts = () => {
 
     //-------------------------------------------
     const handleAdvertise = (id) => {
-        fetch(`http://localhost:5000/advertise/${id}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/advertise/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

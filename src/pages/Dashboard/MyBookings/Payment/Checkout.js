@@ -25,7 +25,7 @@ const Checkout = ({ bookedProduct }) => {
     //----------------------------
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://final-12-server-sayyed-ahsan.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -93,7 +93,7 @@ const Checkout = ({ bookedProduct }) => {
                 bookingId: _id
             }
             console.log(payment)
-            fetch('http://localhost:5000/payments', {
+            fetch('https://final-12-server-sayyed-ahsan.vercel.app/payments', {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json',
@@ -118,7 +118,7 @@ const Checkout = ({ bookedProduct }) => {
 
     const oldCulletionUpdate = (oldId) => {
         console.log(oldId)
-        fetch(`http://localhost:5000/paymentsOld/${oldId}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/paymentsOld/${oldId}`, {
             method: 'PUT',
         })
             .then(res => res.json())

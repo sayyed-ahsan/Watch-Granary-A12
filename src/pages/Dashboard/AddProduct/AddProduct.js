@@ -38,7 +38,7 @@ const AddProduct = () => {
                     console.log(productInfo)
 
                     // save product information to the database
-                    fetch('http://localhost:5000/addproduct', {
+                    fetch('https://final-12-server-sayyed-ahsan.vercel.app/addproduct', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

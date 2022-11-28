@@ -31,7 +31,7 @@ const Categories = () => {
     const params = useParams();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/currectUser?email=${userEmail}`)
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/currectUser?email=${userEmail}`)
             .then(res => res.json())
             .then(data => {
                 setcurrentUsername(data.name);
@@ -42,7 +42,7 @@ const Categories = () => {
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/categories/${params?.cullection}`, {
+            const res = await fetch(`https://final-12-server-sayyed-ahsan.vercel.app/categories/${params?.cullection}`, {
                 headers: {
                     authuraization: `bearer ${localStorage.getItem('accesstoken')}`
                 }
@@ -78,7 +78,7 @@ const Categories = () => {
 
         console.log(buyerEmail);
         console.log(allInfo);
-        fetch(`http://localhost:5000/categories/${bookedProduct?._id}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/categories/${bookedProduct?._id}`, {
             method: 'POST',
             headers: {
                 bookingProduct: JSON.stringify(allInfo),
@@ -101,7 +101,7 @@ const Categories = () => {
 
     //-------------------------------------------
     const handleReport = (id) => {
-        fetch(`http://localhost:5000/product/report/${id}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/product/report/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

@@ -15,7 +15,7 @@ const MyBookings = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/mybookings?email=${user?.email}`, {
+        axios.get(`https://final-12-server-sayyed-ahsan.vercel.app/mybookings?email=${user?.email}`, {
             headers: {
                 authuraization: `bearer ${localStorage.getItem('accesstoken')}`
             }

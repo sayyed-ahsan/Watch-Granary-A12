@@ -18,7 +18,7 @@ const Dashboard = () => {
     const { data: currectUser, isLoading, refetch } = useQuery({
         queryKey: ['currectUser'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/currectUser?email=${user?.email}`);
+            const res = await fetch(`https://final-12-server-sayyed-ahsan.vercel.app/currectUser?email=${user?.email}`);
             const data = await res.json();
             return data;
         }

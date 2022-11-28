@@ -5,7 +5,7 @@ const useCurrectUser = email => {
     const [iscurrentUserLoading, setcurrentUserLoading] = useState(true);
     useEffect(() => {
         if (email) {
-            fetch(`http://localhost:5000/currectUser?email=${email}`)
+            fetch(`https://final-12-server-sayyed-ahsan.vercel.app/currectUser?email=${email}`)
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);

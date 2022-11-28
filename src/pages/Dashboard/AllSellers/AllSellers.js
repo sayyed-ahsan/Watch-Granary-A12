@@ -11,7 +11,7 @@ const AllSellers = () => {
     const { data: sellers, isLoading, refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/sellers`);
+            const res = await fetch(`https://final-12-server-sayyed-ahsan.vercel.app/sellers`);
             const data = await res.json();
             return data;
         }
@@ -22,7 +22,7 @@ const AllSellers = () => {
 
     const hendleDelet = (id) => {
         console.log(id)
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/users/${id}`, {
             method: 'DELETE',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -41,7 +41,7 @@ const AllSellers = () => {
 
     //-------------------------------------------
     const handleVerifySeller = (id, email) => {
-        fetch(`http://localhost:5000/verifySeller/${id}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/verifySeller/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -59,7 +59,7 @@ const AllSellers = () => {
     //-------------------------------------------
     //-------------------------------------------
     const handleVerifyProduct = (email) => {
-        fetch(`http://localhost:5000/verifyProduct?email=${email}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/verifyProduct?email=${email}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

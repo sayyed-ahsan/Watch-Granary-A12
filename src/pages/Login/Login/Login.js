@@ -29,7 +29,7 @@ const Login = () => {
         const user = { name, email, status };
         getUserToken(email)
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://final-12-server-sayyed-ahsan.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -45,7 +45,7 @@ const Login = () => {
     //-----------------------------------------------------------------
     const getUserToken = (email) => {
         console.log(email)
-        fetch(`http://localhost:5000/jwt?email=${email}`)
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/jwt?email=${email}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)

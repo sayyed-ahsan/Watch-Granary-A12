@@ -10,14 +10,14 @@ const ReportedItems = () => {
     const { data: reportedProducts = [], isLoading, refetch } = useQuery({
         queryKey: ['reportedProducts'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/reportedProducts`);
+            const res = await fetch(`https://final-12-server-sayyed-ahsan.vercel.app/reportedProducts`);
             const data = await res.json();
             return data;
         }
     });
 
     const hendleDelet = (id) => {
-        fetch(`http://localhost:5000/reportedProduct/${id}`, {
+        fetch(`https://final-12-server-sayyed-ahsan.vercel.app/reportedProduct/${id}`, {
             method: 'DELETE',
             // headers: {
             //     authorization: `bearer ${localStorage.getItem('accessToken')}`
