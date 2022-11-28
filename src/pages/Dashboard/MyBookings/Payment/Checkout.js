@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { AuthContext } from '../../../../contexts/AuthProvider';
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = ({ bookedProduct }) => {
 
@@ -13,7 +14,10 @@ const Checkout = ({ bookedProduct }) => {
     const [processing, setProcessing] = useState(false);
     const [transactionId, setTransactionId] = useState('');
     const [clientSecret, setClientSecret] = useState("");
+
     //----------------------------
+    const navigate = useNavigate('');
+
     //----------------------------
     const stripe = useStripe();
     const elements = useElements();
@@ -122,6 +126,7 @@ const Checkout = ({ bookedProduct }) => {
                 toast.success(`successful`);
                 console.log(data);
                 setProcessing(false);
+                navigate('/dashboard/mybooking')
 
             })
     }

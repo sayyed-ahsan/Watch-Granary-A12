@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast'
+import Loder from '../../Shared/Loder/Loder';
 
 
 const ReportedItems = () => {
@@ -33,7 +34,9 @@ const ReportedItems = () => {
     }
 
 
-
+    if (isLoading) {
+        return <Loder></Loder>
+    }
 
     return (
         <div>

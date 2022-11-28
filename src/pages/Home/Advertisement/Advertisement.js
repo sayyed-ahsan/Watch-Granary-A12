@@ -23,7 +23,7 @@ const Advertisement = () => {
             {advertisedProducts?.length > 0 &&
 
                 < div className='my-8'>
-                    <h1 className='text-center text-3xl my-3'>Advertisement Section {advertisedProducts.length}</h1>
+                    <h1 className='text-center text-3xl my-3'>Advertisement Section</h1>
                     <div className='px-10'>
                         <div className="carousel carousel-center p-4 space-x-4 bg-neutral rounded-box">
 

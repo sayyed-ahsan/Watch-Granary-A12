@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
 
@@ -9,6 +9,7 @@ const Login = () => {
     //-----------------------------------------------------------------
     const { user, signIn, googleSignin } = useContext(AuthContext);
     //-----------------------------------------------------------------
+    const navigate = useNavigate('');
     //-----------------------------------------------------------------
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
@@ -21,13 +22,13 @@ const Login = () => {
         const status = 'buyer'
         googleSignin()
             .then(res => saveUser(res.user.displayName, res.user.email, status))
-
-
     }
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     const saveUser = (name, email, status) => {
         const user = { name, email, status };
+        getUserToken(email)
+
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
@@ -39,17 +40,18 @@ const Login = () => {
             .then(data => {
                 console.log(data)
                 toast('User Created Successfully.')
-                getUserToken(email)
             })
     }
     //-----------------------------------------------------------------
     const getUserToken = (email) => {
+        console.log(email)
         fetch(`http://localhost:5000/jwt?email=${email}`)
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 if (data.accessToken) {
                     localStorage.setItem('accesstoken', data.accessToken);
-                    // navigate('/')
+                    navigate('/')
                 }
             })
     }

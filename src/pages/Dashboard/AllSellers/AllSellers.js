@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
+import Loder from '../../Shared/Loder/Loder';
 
 
 const AllSellers = () => {
@@ -15,6 +16,7 @@ const AllSellers = () => {
             return data;
         }
     })
+
 
     // console.log(sellers)
 
@@ -48,7 +50,7 @@ const AllSellers = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
-                    toast.success('Verified successful.')
+                    // toast.success('Verified successful.')
                     refetch();
                     handleVerifyProduct(email)
                 }
@@ -75,7 +77,7 @@ const AllSellers = () => {
 
     //----------------
     if (isLoading) {
-        <div>loding...</div>
+        return <Loder></Loder>
     }
 
 

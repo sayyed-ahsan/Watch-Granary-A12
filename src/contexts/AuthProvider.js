@@ -18,8 +18,8 @@ const AuthProvider = ({ children }) => {
         setTheme(JSON.parse(window.localStorage.getItem("theme") || "false"));
     }, [])
     const handleThemeChange = () => {
-        setTheme(!theme);
-        window.localStorage.setItem("theme", JSON.stringify(!theme));
+        // setTheme(!theme);
+        // window.localStorage.setItem("theme", JSON.stringify(!theme));
     }
     //--------
     const googleSignin = () => {

@@ -6,6 +6,7 @@ import Categories from "../../pages/Categories/Categories";
 import AddProduct from "../../pages/Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../../pages/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../../pages/Dashboard/AllSellers/AllSellers";
+import CommonDashboard from "../../pages/Dashboard/CommonDashboard/CommonDashboard";
 import MyBookings from "../../pages/Dashboard/MyBookings/MyBookings";
 import Payment from "../../pages/Dashboard/MyBookings/Payment/Payment";
 import MyProducts from "../../pages/Dashboard/MyProducts/MyProducts";
@@ -14,11 +15,17 @@ import Home from "../../pages/Home/Home/Home";
 import Login from "../../pages/Login/Login/Login";
 import Signup from "../../pages/Login/Signup/Signup";
 import Bonus from "../../pages/Shared/Bonus/Bonus";
+import DisplayErro from "../../pages/Shared/DisplayError/DisplayErro";
+import AdminRoute from "../AdminRout/AdminRout";
+import BuyerRout from "../BuyerRout/BuyerRout";
+import PrivetRout from "../PrivetRout/PrivetRout";
+import SellerRout from "../SellerRout/SellerRout";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <DisplayErro></DisplayErro>,
         children: [
             {
                 path: '/',
@@ -26,7 +33,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/categories/:cullection',
-                element: <Categories></Categories>
+                element: <PrivetRout><Categories></Categories></PrivetRout>
             },
             {
                 path: '/blog',
@@ -49,10 +56,15 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <Dashboard></Dashboard>,
+        errorElement: <DisplayErro></DisplayErro>,
         children: [
             {
                 path: '/dashboard',
-                element: <MyBookings></MyBookings>
+                element: <CommonDashboard></CommonDashboard>
+            },
+            {
+                path: '/dashboard/mybooking',
+                element: <BuyerRout><MyBookings></MyBookings></BuyerRout>
             },
             {
                 path: '/dashboard/payment/:productId',
@@ -61,23 +73,23 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/addProduct',
-                element: <AddProduct></AddProduct>
+                element: <SellerRout><AddProduct></AddProduct></SellerRout>
             },
             {
                 path: '/dashboard/myProducts',
-                element: <MyProducts></MyProducts>
+                element: <SellerRout><MyProducts></MyProducts></SellerRout>
             },
             {
                 path: '/dashboard/allSellers',
-                element: <AllSellers></AllSellers>
+                element: <AdminRoute><AllSellers></AllSellers></AdminRoute>
             },
             {
                 path: '/dashboard/allBuyers',
-                element: <AllBuyers></AllBuyers>
+                element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>
             },
             {
                 path: '/dashboard/report',
-                element: <ReportedItems></ReportedItems>
+                element: <AdminRoute><ReportedItems></ReportedItems></AdminRoute>
             }
         ]
     }

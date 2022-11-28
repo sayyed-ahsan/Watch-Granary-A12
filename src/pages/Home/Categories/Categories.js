@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Loder from '../../Shared/Loder/Loder';
 
 const Categories = () => {
 
-    const { data: categories = [] } = useQuery({
+    const { data: categories = [], isLoading } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
             const result = await fetch('http://localhost:5000/categories')
@@ -13,14 +14,17 @@ const Categories = () => {
         }
     })
 
-
+    if (isLoading) {
+        <Loder></Loder>
+    }
 
     return (
         <section className=''>
 
             <div className='mx-8 my-10'>
+
                 <h1 className='text-3xl text-center my-3'>Categories {categories?.length}</h1>
-                <div className='flex justify-center'>
+                <div className='grid gap-12 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
 
 
                     {

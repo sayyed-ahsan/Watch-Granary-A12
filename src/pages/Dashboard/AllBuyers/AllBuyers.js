@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
+import Loder from '../../Shared/Loder/Loder';
 
 
 const AllBuyers = () => {
@@ -40,7 +41,7 @@ const AllBuyers = () => {
 
     //----------------
     if (isLoading) {
-        <div>loding...</div>
+        return <Loder></Loder>
     }
     //----------------
 

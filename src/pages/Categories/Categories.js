@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
-import { useLoaderData, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 
 import { useForm } from "react-hook-form";
+import Loder from '../Shared/Loder/Loder';
+import useCurrectUser from '../../hooks/useCurrentUser';
 
 
 const Categories = () => {
@@ -13,23 +15,40 @@ const Categories = () => {
     const userEmail = user?.email
     const userName = user?.displayName
 
-    const [bookedProduct, setProduct] = useState(null)
+    const [currentUsername, setcurrentUsername] = useState('');
 
+
+    const [bookedProduct, setProduct] = useState(null)
+    const navigate = useNavigate('');
 
     // console.log(user, userEmail, userName)
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
 
     // const products = useLoaderData();
 
     const params = useParams();
 
+    useEffect(() => {
+        fetch(`http://localhost:5000/currectUser?email=${userEmail}`)
+            .then(res => res.json())
+            .then(data => {
+                setcurrentUsername(data.name);
+            })
+
+    }, [])
+
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/categories/${params?.cullection}`);
+            const res = await fetch(`http://localhost:5000/categories/${params?.cullection}`, {
+                headers: {
+                    authuraization: `bearer ${localStorage.getItem('accesstoken')}`
+                }
+            });
             const data = await res.json();
+            console.log(res)
             return data;
         }
     });
@@ -67,13 +86,14 @@ const Categories = () => {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
+                toast.success('successful.')
                 console.log('ssssssssss')
+                refetch();
+                reset()
+                // navigate('/dashboard')
 
-                if (data.modifiedCount > 0) {
-                    toast.success('successful.')
-                    console.log('ssssssssss')
-                    refetch();
-                }
+
             })
     }
     //-------------------------------------------
@@ -100,7 +120,7 @@ const Categories = () => {
 
     //----------------
     if (isLoading) {
-        <div>loding...</div>
+        return <Loder></Loder>
     }
     //----------------
 
@@ -113,7 +133,7 @@ const Categories = () => {
 
             <div className='grid gap-6 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {
-                    products?.map(product => <div key={product._id}>
+                    products?.map(product => <div key={product?._id}>
                         {
                             product?.stoke == "available" && <div className="card w-80 bg-base-100 shadow-xl hover:shadow-2xl">
                                 <figure><img src={product?.PhotoUrl} alt="Shoes" /></figure>
@@ -136,7 +156,7 @@ const Categories = () => {
                                     <p>Location: {product?.location}</p>
                                     <p>Resell Price: {product?.resellPrice}</p>
                                     {
-                                        product.verify ?
+                                        product?.verify ?
                                             <>
                                                 <div className='flex'>
                                                     <h1 className='text-success font-bold'>Verified </h1>
@@ -182,42 +202,42 @@ const Categories = () => {
 
 
                             {/*---------- user name -----------*/}
-                            <div className="form-control w-full max-w-xs">
+                            <div className="form-control w-full">
                                 <label className="label mt-4"><span className="label-text"> name</span></label>
-                                <input  {...register("userName")} name="userName" value={userName} className="input input-bordered w-full max-w-xs" />
+                                <input  {...register("userName")} name="userName" value={currentUsername} className="input input-bordered w-full " />
                             </div>
                             {/*---------- user email -----------*/}
-                            <div className="form-control w-full max-w-xs">
+                            <div className="form-control w-full">
                                 <label className="label mt-4"><span className="label-text">email</span></label>
-                                <input  {...register("userEmail")} name="userEmail" value={userEmail} className="input input-bordered w-full max-w-xs" />
+                                <input  {...register("userEmail")} name="userEmail" value={userEmail} className="input input-bordered w-full " />
                             </div>
                             {/*---------- product name -----------*/}
-                            <div className="form-control w-full max-w-xs">
+                            <div className="form-control w-full">
                                 <label className="label mt-4"><span className="label-text"> product name</span></label>
-                                <input  {...register("productName")} name="productName" value={bookedProduct?.name} className="input input-bordered w-full max-w-xs" />
+                                <input  {...register("productName")} name="productName" value={bookedProduct?.name} className="input input-bordered w-full " />
                             </div>
                             {/*---------- price -----------*/}
-                            <div className="form-control w-full max-w-xs">
+                            <div className="form-control w-full">
                                 <label className="label mt-4"><span className="label-text">price</span></label>
-                                <input  {...register("productPrice")} name="productPrice" value={bookedProduct?.resellPrice} className="input input-bordered w-full max-w-xs" />
+                                <input  {...register("productPrice")} name="productPrice" value={bookedProduct?.resellPrice} className="input input-bordered w-full " />
                             </div>
 
 
 
                             {/*---------- Phone Number -----------*/}
-                            <div className="form-control w-full max-w-xs">
+                            <div className="form-control w-full">
                                 <label className="label mt-4"><span className="label-text">Phone Number</span></label>
                                 <input  {...register("PhonNumber", {
                                     required: "Product Name Required"
-                                })} type="name" name="PhonNumber" className="input input-bordered w-full max-w-xs" />
+                                })} type="name" name="PhonNumber" className="input input-bordered w-full " />
                                 {errors.PhonNumber && <p className='text-red-600 text-sm'>{errors.PhonNumber?.message}</p>}
                             </div>
                             {/*---------- loction -----------*/}
-                            <div className="form-control w-full max-w-xs">
+                            <div className="form-control w-full">
                                 <label className="label mt-4"><span className="label-text">Meting Location</span></label>
                                 <input  {...register("mettinglocation", {
                                     required: "metting location Name Required"
-                                })} type="name" name="mettinglocation" className="input input-bordered w-full max-w-xs" />
+                                })} type="name" name="mettinglocation" className="input input-bordered w-full " />
                                 {errors.mettinglocation && <p className='text-red-600 text-sm'>{errors.mettinglocation?.message}</p>}
                             </div>
 

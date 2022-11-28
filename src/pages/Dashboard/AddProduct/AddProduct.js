@@ -1,12 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import Loder from '../../Shared/Loder/Loder';
 
 const AddProduct = () => {
     //-----------------------------------------------------------------
     const { user } = useContext(AuthContext);
+
+    const [loding, setLodin] = useState(false);
     //-----------------------------------------------------------------
     const { register, handleSubmit, formState: { errors } } = useForm();
     //-----------------------------------------------------------------
@@ -16,9 +19,9 @@ const AddProduct = () => {
     // console.log(" listingDate.......", listingDate)
     //-----------------------------------------------------------------
     const handleAddProduct = (data) => {
-        // console.log(data)
+
+        setLodin(true);
         const image = data.photo[0];
-        // console.log(image)
         const formData = new FormData();
         formData.append('image', image);
         const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
@@ -39,13 +42,15 @@ const AddProduct = () => {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
-                            // authorization: `bearer ${localStorage.getItem('accessToken')}`
+                            authorization: `bearer ${localStorage.getItem('accessToken')}`
                         },
                         body: JSON.stringify(productInfo)
                     })
                         .then(res => res.json())
                         .then(result => {
                             // console.log(result);
+                            setLodin(false);
+
                             toast.success(`Product added successfully`);
                             // navigate('/dashboard')
                         })
@@ -53,6 +58,12 @@ const AddProduct = () => {
             })
     }
     //-----------------------------------------------------------------
+    if (loding) {
+        return <Loder></Loder>
+    }
+    //-----------------------------------------------------------------
+
+
 
     return (
         <div>

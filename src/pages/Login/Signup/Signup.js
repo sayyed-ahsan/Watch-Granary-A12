@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
 
 
 const Signup = () => {
     //-----------------------------------------------------------------
-    const { user, createUser } = useContext(AuthContext);
+    const { user, createUser, updateUser } = useContext(AuthContext);
     //-----------------------------------------------------------------
+    const navigate = useNavigate('');
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -26,6 +27,7 @@ const Signup = () => {
                 console.log(error)
                 // setSignUPError(error.message)
             });
+
     }
     //-----------------------------------------------------------------
     const saveUser = (name, email, status) => {
@@ -50,7 +52,7 @@ const Signup = () => {
             .then(data => {
                 if (data.accessToken) {
                     localStorage.setItem('accesstoken', data.accessToken);
-                    // navigate('/')
+                    navigate('/')
                 }
             })
     }

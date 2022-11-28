@@ -4,6 +4,7 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 import { MdBookmarkAdded } from 'react-icons/md';
 import { FcAdvertising } from 'react-icons/fc';
 import toast from 'react-hot-toast'
+import Loder from '../../Shared/Loder/Loder';
 
 const MyProducts = () => {
 
@@ -20,7 +21,7 @@ const MyProducts = () => {
             return data;
         }
     })
-
+    console.log(isLoading)
 
     //-------------------------------------------
     const handleAdvertise = (id) => {
@@ -41,7 +42,7 @@ const MyProducts = () => {
     //-------------------------------------------
     //----------------
     if (isLoading) {
-        <div>loding...</div>
+        return <Loder></Loder>
     }
     //----------------
     // console.log(myProducts);

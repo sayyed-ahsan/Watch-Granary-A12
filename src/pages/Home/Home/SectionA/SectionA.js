@@ -1,4 +1,8 @@
 import React from 'react';
+import img1 from '../../../../imges/sctionImg/1.png';
+import img2 from '../../../../imges/sctionImg/2.png';
+import img3 from '../../../../imges/sctionImg/3.png';
+
 
 const SectionA = () => {
     return (
@@ -6,11 +10,11 @@ const SectionA = () => {
             <section>
                 <div className="hero bg-base-200">
                     <div className="hero-content flex-col lg:flex-row-reverse">
-                        <img src="https://placeimg.com/260/400/arch" className="max-w-sm rounded-lg shadow-2xl" />
-                        <div>
-                            <h1 className="text-5xl font-bold">Box Office News!</h1>
-                            <p className="py-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam possimus dolorum omnis nemo iste porro eligendi vitae, ipsa in ut adipisci eaque aperiam? Fugit tempora voluptatum, sequi possimus minus placeat! Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                            <button className="btn btn-primary">Get Started</button>
+                        <img src={img3} className="max-w-sm rounded-lg shadow-2xl" />
+                        <div className='max-w-[600px]'>
+                            <h1 className="text-5xl font-bold">Buy a New Watch!</h1>
+                            <p className="py-6">It can create a strong impression when she shakes hands or holds phones. That little thing on her wrist helps to perfect any appearance from a minimal look, a posh outfit to an office dress. While women have a wide selection of fashion accessories and jewelry, men have only watches as their truly choice.</p>
+                            <button className="btn btn-primary">BYy a Watch</button>
                         </div>
                     </div>
                 </div>
@@ -18,11 +22,11 @@ const SectionA = () => {
             <section>
                 <div className="hero  bg-base-200">
                     <div className="hero-content flex-col lg:flex-row">
-                        <img src="https://placeimg.com/260/400/arch" className="max-w-sm rounded-lg shadow-2xl" />
-                        <div>
-                            <h1 className="text-5xl font-bold">Box Office News!</h1>
-                            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                            <button className="btn btn-primary">Get Started</button>
+                        <img src={img2} className="max-w-sm rounded-lg shadow-2xl" />
+                        <div className='max-w-[600px]'>
+                            <h1 className="text-5xl font-bold">And sell your old Watch!</h1>
+                            <p className="py-6">It not only keeps you on track on most things but also lets you value the time you do have. In fact, it help you spend it right with the people you love, and understanding that value is something that will change your life.</p>
+                            <button className="btn btn-primary">sell old one</button>
                         </div>
                     </div>
                 </div>

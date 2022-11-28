@@ -2,16 +2,24 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { Link } from 'react-router-dom';
+import Loder from '../../Shared/Loder/Loder';
 
 const MyBookings = () => {
+
+
 
     const { user } = useContext(AuthContext)
 
 
     const [myBookings, setMyBookings] = useState([]);
 
+
     useEffect(() => {
-        axios.get(`http://localhost:5000/mybookings?email=${user?.email}`)
+        axios.get(`http://localhost:5000/mybookings?email=${user?.email}`, {
+            headers: {
+                authuraization: `bearer ${localStorage.getItem('accesstoken')}`
+            }
+        })
             .then(data => {
                 console.log(data)
                 setMyBookings(data.data)
@@ -19,7 +27,11 @@ const MyBookings = () => {
     }, [user])
 
 
-    console.log(myBookings);
+    // if (myBookings.length == 0) {
+    //     return <Loder></Loder>
+    // }
+
+
 
     return (
         <div>
