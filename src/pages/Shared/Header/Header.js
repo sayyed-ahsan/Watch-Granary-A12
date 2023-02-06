@@ -15,6 +15,9 @@ const Header = () => {
     const menuItem =
         <React.Fragment>
             <li><Link to="/">Home</Link></li>
+            <li><Link to="/Aboutus">Aboutus</Link></li>
+            <li><Link to="/Help">Help</Link></li>
+            <li><Link to="/">Contrctus</Link></li>
             {
                 user && <li><Link to="/dashboard">Dashboard</Link></li>
             }

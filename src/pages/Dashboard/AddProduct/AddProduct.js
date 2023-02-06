@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider';
@@ -15,7 +16,7 @@ const AddProduct = () => {
     //-----------------------------------------------------------------
     const imgHostKey = process.env.REACT_APP_imagebb_key;
     const listingDate = format(new Date(), 'PP')
-
+    const navigate = useNavigate('');
     // console.log(" listingDate.......", listingDate)
     //-----------------------------------------------------------------
     const handleAddProduct = (data) => {
@@ -52,7 +53,7 @@ const AddProduct = () => {
                             setLodin(false);
 
                             toast.success(`Product added successfully`);
-                            // navigate('/dashboard')
+                            navigate('/dashboard/myProducts')
                         })
                 }
             })

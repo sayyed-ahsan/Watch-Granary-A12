@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../../layout/Dashboard";
 import Main from "../../layout/Main";
+import Aboutus from "../../pages/Aboutus/Aboutus";
 import Blog from "../../pages/Blog/Blog";
 import Categories from "../../pages/Categories/Categories";
 import AddProduct from "../../pages/Dashboard/AddProduct/AddProduct";
@@ -11,6 +12,7 @@ import MyBookings from "../../pages/Dashboard/MyBookings/MyBookings";
 import Payment from "../../pages/Dashboard/MyBookings/Payment/Payment";
 import MyProducts from "../../pages/Dashboard/MyProducts/MyProducts";
 import ReportedItems from "../../pages/Dashboard/ReportedItems/ReportedItems";
+import Help from "../../pages/Help/Help";
 import Home from "../../pages/Home/Home/Home";
 import Login from "../../pages/Login/Login/Login";
 import Signup from "../../pages/Login/Signup/Signup";
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home></Home>
+            },
+            {
+                path: '/Aboutus',
+                element: <Aboutus></Aboutus>
+            },
+            {
+                path: '/Help',
+                element: <Help></Help>
             },
             {
                 path: '/categories/:cullection',
